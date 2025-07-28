@@ -1,6 +1,5 @@
-package com.teamx.vibecare
+package com.teamx.vibecare.auth
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,23 +11,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.teamx.vibecare.auth.AuthActivity
-import com.teamx.vibecare.ui.theme.VibeCareTheme
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.teamx.vibecare.auth.screens.LoginScreen
+import com.teamx.vibecare.auth.ui.theme.VibeCareTheme
+import com.teamx.vibecare.auth.utils.AuthViewModel
 
-class MainActivity : ComponentActivity() {
+class AuthActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        Intent(this, AuthActivity::class.java).also {
-            startActivity(it)
-        }
         setContent {
             VibeCareTheme {
-                Scaffold( modifier = Modifier.fillMaxSize() ) { innerPadding ->
-                    innerPadding.calculateTopPadding()
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    val authViewModel = viewModel { AuthViewModel() }
+                    LoginScreen(modifier = Modifier.padding(innerPadding), authViewModel)
                 }
             }
         }
     }
 }
-
