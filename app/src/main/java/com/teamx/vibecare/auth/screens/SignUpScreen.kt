@@ -124,6 +124,7 @@ fun SignUpScreen(modifier: Modifier, viewModel: AuthViewModel) {
 
 
 
+
         Row(
             modifier = Modifier
                 .padding(top = 20.dp)
