@@ -2,6 +2,7 @@ package com.teamx.vibecare.auth.screens
 
 
 
+import android.widget.DatePicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 
@@ -28,18 +29,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.teamx.vibecare.R
 import com.teamx.vibecare.auth.utils.AuthUtils
 import com.teamx.vibecare.auth.utils.AuthViewModel
+import android.app.DatePickerDialog
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
+import java.util.*
+
 
 
 @Composable
@@ -50,6 +59,23 @@ fun SignUpScreen(modifier: Modifier, viewModel: AuthViewModel) {
     val mobileNumber by viewModel.email.collectAsStateWithLifecycle()
     val dob by viewModel.email.collectAsStateWithLifecycle()
 
+    val context = LocalContext.current
+    var selectedDate by remember { mutableStateOf("") }
+
+
+
+    val calendar = Calendar.getInstance()
+    val year = calendar.get(Calendar.YEAR)
+    val month = calendar.get(Calendar.MONTH)
+    val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+    // DatePicker Dialog
+    val datePickerDialog = DatePickerDialog(
+        context,
+        { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDay: Int ->
+            selectedDate = "$selectedDay/${selectedMonth + 1}/$selectedYear"
+        }, year, month, day
+    )
 
 
 
@@ -75,17 +101,26 @@ fun SignUpScreen(modifier: Modifier, viewModel: AuthViewModel) {
 
         HeadingNames("Full Name")
 
-        textField(fullName,viewModel.changeEmail(fullName))
+        textField(fullName, { viewModel.changeEmail(email) } )
 
       HeadingNames("Password")
-        textField(password,viewModel.changePassword(password))
+        textField(password, { viewModel.changePassword(password) })
 
         HeadingNames("Email")
-        textField(email,viewModel.changeEmail(email))
+        textField(email, { viewModel.changeEmail(email) })
 
         HeadingNames("Date of Birth")
-        textField(dob,viewModel.changeEmail(dob))
 
+//
+//        Column {
+//            Text(text = if (selectedDate.isEmpty()) "Select your Date of Birth" else "DOB: $selectedDate")
+//            Spacer(modifier = Modifier.height(2.dp))
+//            Button(
+//                onClick = {datePickerDialog.show()}
+//            ) {
+//                Text("Select data birth")
+//            }
+//        }
 
         TextButton(
             onClick = {},
@@ -94,7 +129,12 @@ fun SignUpScreen(modifier: Modifier, viewModel: AuthViewModel) {
                 .padding(end = 26.dp, top = 10.dp)
         ) {
             Text(
-                text = "By continuing you agree to our Terms & Conditions",
+                text = buildAnnotatedString {
+                    append("By continuing you agree to our ")
+                    withStyle(style = SpanStyle(color = Color.Blue)){
+                        append("Terms & Conditions")
+                    }
+                },
                 fontSize = 12.sp,
                 fontFamily = FontFamily(Font(R.font.league_spartan_medium)),
                 color = Color(AuthUtils.LIGHT_BLACK),
@@ -164,14 +204,15 @@ fun HeadingNames(string: String) {
 }
 
 @Composable
-fun textField(email: String, changeEmail: Unit) {
+fun textField(email: String, onValueChange: (String) -> Unit) {
     val focusManager = LocalFocusManager.current
 
 
 
     TextField(
         value = email,
-        onValueChange = { changeEmail },
+        onValueChange = { newValue ->
+            onValueChange(newValue)},
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 24.dp, end = 24.dp, top = 12.dp),
