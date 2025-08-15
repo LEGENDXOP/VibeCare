@@ -45,6 +45,8 @@ import com.teamx.vibecare.R
 import com.teamx.vibecare.auth.utils.AuthUtils
 import com.teamx.vibecare.auth.utils.AuthViewModel
 import android.app.DatePickerDialog
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import java.util.*
@@ -76,6 +78,7 @@ fun SignUpScreen(modifier: Modifier, viewModel: AuthViewModel) {
             selectedDate = "$selectedDay/${selectedMonth + 1}/$selectedYear"
         }, year, month, day
     )
+    var valueStored by remember { mutableStateOf(false) }
 
 
 
@@ -101,26 +104,41 @@ fun SignUpScreen(modifier: Modifier, viewModel: AuthViewModel) {
 
         HeadingNames("Full Name")
 
-        textField(fullName, { viewModel.changeEmail(email) } )
+        textField( fullName , {
+            print("1")
+            viewModel.changeEmail(it)
+        } )
 
       HeadingNames("Password")
-        textField(password, { viewModel.changePassword(password) })
+        textField( password , { viewModel.changePassword(it) })
 
         HeadingNames("Email")
-        textField(email, { viewModel.changeEmail(email) })
+        textField(email, { viewModel.changeEmail(it) })
 
         HeadingNames("Date of Birth")
 
 //
-//        Column {
-//            Text(text = if (selectedDate.isEmpty()) "Select your Date of Birth" else "DOB: $selectedDate")
-//            Spacer(modifier = Modifier.height(2.dp))
-//            Button(
-//                onClick = {datePickerDialog.show()}
-//            ) {
-//                Text("Select data birth")
-//            }
-//        }
+        Column {
+            Text(text = if (selectedDate.isEmpty()) "Select your Date of Birth" else "DOB: $selectedDate")
+            Spacer(modifier = Modifier.height(2.dp))
+        if (!valueStored){
+            Button(
+                onClick = {
+                    datePickerDialog.show()
+                    valueStored = true
+                }
+            ) {
+                Text("Select data birth")
+            }
+        } else{
+            IconButton(
+                onClick = {datePickerDialog.show()}
+            ) {
+                Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit")
+            }
+        }
+        }
+
 
         TextButton(
             onClick = {},
@@ -204,7 +222,7 @@ fun HeadingNames(string: String) {
 }
 
 @Composable
-fun textField(email: String, onValueChange: (String) -> Unit) {
+fun textField(email: String, onChange: (String) -> Unit) {
     val focusManager = LocalFocusManager.current
 
 
@@ -212,7 +230,8 @@ fun textField(email: String, onValueChange: (String) -> Unit) {
     TextField(
         value = email,
         onValueChange = { newValue ->
-            onValueChange(newValue)},
+            print("2")
+            onChange(newValue)},
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 24.dp, end = 24.dp, top = 12.dp),

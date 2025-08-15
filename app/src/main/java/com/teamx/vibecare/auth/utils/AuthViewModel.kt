@@ -16,6 +16,7 @@ class AuthViewModel: ViewModel() {
 
 
     fun changeEmail(email: String){
+        print(email)
         _email.value = email
     }
     fun changePassword(password: String){
