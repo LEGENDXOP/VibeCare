@@ -47,9 +47,6 @@ fun LoginScreen(modifier: Modifier, viewModel: AuthViewModel) {
     val email by viewModel.email.collectAsStateWithLifecycle()
     val password by viewModel.password.collectAsStateWithLifecycle()
     val passwordVisibility by viewModel.passwordVisibility.collectAsStateWithLifecycle()
-    val customFont = FontFamily(
-        Font(R.font.league_spartan_semibold, weight = FontWeight.SemiBold)
-    )
     Column(
         modifier = modifier
     ) {
@@ -60,7 +57,7 @@ fun LoginScreen(modifier: Modifier, viewModel: AuthViewModel) {
             textAlign = TextAlign.Center,
             color = Color(AuthUtils.PRIMARY_BLUE),
             fontSize = 28.sp,
-            fontFamily = customFont
+            fontFamily = AuthUtils.SPARTAN_SEMIBOLD
         )
         Spacer(Modifier.height(24.dp))
         Text(
@@ -68,7 +65,7 @@ fun LoginScreen(modifier: Modifier, viewModel: AuthViewModel) {
             modifier = Modifier
                 .padding(start = 26.dp),
             fontSize = 30.sp,
-            fontFamily = customFont,
+            fontFamily = AuthUtils.SPARTAN_SEMIBOLD,
             color = Color(AuthUtils.PRIMARY_BLUE)
         )
         Spacer(Modifier.height(32.dp))
@@ -77,7 +74,7 @@ fun LoginScreen(modifier: Modifier, viewModel: AuthViewModel) {
             modifier = Modifier
                 .padding(start = 26.dp),
             fontSize = 24.sp,
-            fontFamily = FontFamily(Font(R.font.league_spartan_medium)),
+            fontFamily = AuthUtils.SPARTAN_MEDIUM,
             color = Color.Black,
         )
         val focusManager = LocalFocusManager.current
@@ -87,6 +84,7 @@ fun LoginScreen(modifier: Modifier, viewModel: AuthViewModel) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 24.dp, top = 12.dp),
+            placeholder = {Text("example@gmail.com", color = Color(AuthUtils.PRIMARY_BLUE))},
             singleLine = true,
             textStyle = TextStyle.Default.copy(fontSize = 20.sp),
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus(true) }),
@@ -110,7 +108,7 @@ fun LoginScreen(modifier: Modifier, viewModel: AuthViewModel) {
             modifier = Modifier
                 .padding(start = 26.dp, top = 24.dp),
             fontSize = 24.sp,
-            fontFamily = FontFamily(Font(R.font.league_spartan_medium)),
+            fontFamily = AuthUtils.SPARTAN_MEDIUM,
             color = Color.Black,
         )
         TextField(
@@ -133,6 +131,7 @@ fun LoginScreen(modifier: Modifier, viewModel: AuthViewModel) {
                     )
                 }
             },
+            placeholder = {Text("***********", color = Color(AuthUtils.PRIMARY_BLUE))},
             visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus(true) }),
             shape = RoundedCornerShape(20.dp),
@@ -152,7 +151,7 @@ fun LoginScreen(modifier: Modifier, viewModel: AuthViewModel) {
             onClick = {},
             modifier = Modifier
                 .align(Alignment.End)
-                .padding(end = 26.dp, top = 10.dp)
+                .padding(end = 22.dp, top = 4.dp)
         ) {
             Text(
                 text = "Forgot Password",
