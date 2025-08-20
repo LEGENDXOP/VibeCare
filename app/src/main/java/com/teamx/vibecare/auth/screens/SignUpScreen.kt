@@ -3,10 +3,7 @@ package com.teamx.vibecare.auth.screens
 
 
 import android.widget.DatePicker
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -45,9 +42,18 @@ import com.teamx.vibecare.R
 import com.teamx.vibecare.auth.utils.AuthUtils
 import com.teamx.vibecare.auth.utils.AuthViewModel
 import android.app.DatePickerDialog
+import android.graphics.Paint
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.*
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import java.util.*
 
@@ -55,13 +61,13 @@ import java.util.*
 
 @Composable
 fun SignUpScreen(modifier: Modifier, viewModel: AuthViewModel) {
-    val fullName by viewModel.email.collectAsStateWithLifecycle()
+    val fullName by viewModel.name.collectAsStateWithLifecycle()
     val password by viewModel.password.collectAsStateWithLifecycle()
     val email by viewModel.email.collectAsStateWithLifecycle()
-    val mobileNumber by viewModel.email.collectAsStateWithLifecycle()
-    val dob by viewModel.email.collectAsStateWithLifecycle()
+    val dob by viewModel.dob.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
     var selectedDate by remember { mutableStateOf("") }
 
 
@@ -106,38 +112,55 @@ fun SignUpScreen(modifier: Modifier, viewModel: AuthViewModel) {
 
         textField( fullName , {
             print("1")
-            viewModel.changeEmail(it)
+            viewModel.changeName(it)
         } )
+        Spacer(modifier = Modifier.height(8.dp))
 
       HeadingNames("Password")
         textField( password , { viewModel.changePassword(it) })
+        Spacer(modifier = Modifier.height(8.dp))
 
         HeadingNames("Email")
         textField(email, { viewModel.changeEmail(it) })
+        Spacer(modifier = Modifier.height(8.dp))
 
         HeadingNames("Date of Birth")
+        OutlinedTextField(
+            value = selectedDate,
+            onValueChange = { newValue ->
+//                selectedDate = newValue,
+                viewModel.changeDOB(newValue)
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 24.dp, end = 24.dp, top = 12.dp),
+            readOnly = true,
+            singleLine = true,
+            textStyle = TextStyle.Default.copy(fontSize = 20.sp),
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus(true) }),
+            shape = RoundedCornerShape(20.dp),
+            colors = TextFieldDefaults.colors(
+                disabledIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent,
+                errorIndicatorColor = Color.Transparent,
+                unfocusedContainerColor = Color(AuthUtils.LIGHT_BLUE),
+                focusedContainerColor = Color(AuthUtils.LIGHT_BLUE),
+                focusedTextColor = Color(AuthUtils.PRIMARY_BLUE),
+                unfocusedTextColor = Color(AuthUtils.PRIMARY_BLUE)
 
-//
-        Column {
-            Text(text = if (selectedDate.isEmpty()) "Select your Date of Birth" else "DOB: $selectedDate")
-            Spacer(modifier = Modifier.height(2.dp))
-        if (!valueStored){
-            Button(
-                onClick = {
+            ),
+            trailingIcon = {
+                IconButton(onClick = {
                     datePickerDialog.show()
-                    valueStored = true
+                }) {
+                    Icon(
+                        imageVector = Icons.Filled.DateRange,
+                        contentDescription = "Select Date"
+                    )
                 }
-            ) {
-                Text("Select data birth")
             }
-        } else{
-            IconButton(
-                onClick = {datePickerDialog.show()}
-            ) {
-                Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit")
-            }
-        }
-        }
+        )
 
 
         TextButton(
@@ -179,31 +202,6 @@ fun SignUpScreen(modifier: Modifier, viewModel: AuthViewModel) {
                 color = Color.White
             )
         }
-
-
-
-
-        Row(
-            modifier = Modifier
-                .padding(top = 20.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            IconButton( onClick = { /*TODO*/ }) {
-                Icon( painter = painterResource(id = R.drawable.ic_launcher_background), contentDescription= null)
-
-            }
-            IconButton( onClick = { /*TODO*/ }) {
-                Icon( painter = painterResource(id = R.drawable.ic_launcher_background), contentDescription= null)
-
-            }
-            IconButton( onClick = { /*TODO*/ }) {
-                Icon( painter = painterResource(id = R.drawable.ic_launcher_background), contentDescription= null)
-
-            }
-        }
-
     }
 
 }
