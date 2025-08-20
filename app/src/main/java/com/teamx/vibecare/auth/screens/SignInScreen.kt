@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -28,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -204,6 +206,26 @@ fun LoginScreen(modifier: Modifier, viewModel: AuthViewModel) {
                     text = "Sign Up",
                     color = Color(AuthUtils.PRIMARY_BLUE),
                     fontFamily = FontFamily(Font(R.font.league_spartan_medium)),
+                )
+            }
+        }
+        Column(modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                text = "or",
+                fontSize = 12.sp,
+                fontFamily = FontFamily(Font(R.font.league_spartan_medium)),
+                color = Color(AuthUtils.LIGHT_BLACK),
+                textAlign = TextAlign.Center,
+            )
+            IconButton(onClick = { }) {
+                Icon(
+                    //modifier = Modifier.align(Alignment.CenterHorizontally),
+                    painter = painterResource(id = R.drawable.google),
+                    contentDescription = "Google Icon",
+                    modifier = Modifier.size(50.dp),
+                    tint = Color.Unspecified,
                 )
             }
         }
