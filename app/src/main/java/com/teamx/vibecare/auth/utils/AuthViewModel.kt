@@ -5,6 +5,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class AuthViewModel: ViewModel() {
+
+    private var _dob = MutableStateFlow("")
+    val dob = _dob.asStateFlow()
+    private var _name = MutableStateFlow("")
+    val name = _name.asStateFlow()
     private var _email = MutableStateFlow("")
     val email = _email.asStateFlow()
     private var _password = MutableStateFlow("")
@@ -15,6 +20,10 @@ class AuthViewModel: ViewModel() {
     val passwordVisibility = _passwordVisibility.asStateFlow()
 
 
+
+    fun changeName(name: String){
+        _name.value = name
+    }
     fun changeEmail(email: String){
         print(email)
         _email.value = email
@@ -30,4 +39,10 @@ class AuthViewModel: ViewModel() {
         _passwordVisibility.value = pswVisibility
 
     }
+
+    fun changeDOB(date:String){
+        _dob.value = date
+
+    }
+
 }
