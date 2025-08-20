@@ -49,12 +49,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.*
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import java.util.*
 
 
@@ -117,7 +121,41 @@ fun SignUpScreen(modifier: Modifier, viewModel: AuthViewModel) {
         Spacer(modifier = Modifier.height(8.dp))
 
       HeadingNames("Password")
-        textField( password , { viewModel.changePassword(it) })
+        TextField(
+            value = password,
+            onValueChange = { viewModel.changePassword(it) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 24.dp, end = 24.dp, top = 12.dp),
+            singleLine = true,
+            textStyle = TextStyle.Default.copy(fontSize = 20.sp),
+            trailingIcon = {
+                IconButton(
+                    onClick = {
+                        viewModel.changePswVisibility(!passwordVisibility)
+                    }
+                ) {
+                    Icon(
+                        imageVector = if (passwordVisibility) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                        contentDescription = "Password Visibility Button"
+                    )
+                }
+            },
+            visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus(true) }),
+            shape = RoundedCornerShape(20.dp),
+            colors = TextFieldDefaults.colors(
+                disabledIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent,
+                errorIndicatorColor = Color.Transparent,
+                unfocusedContainerColor = Color(AuthUtils.LIGHT_BLUE),
+                focusedContainerColor = Color(AuthUtils.LIGHT_BLUE),
+                focusedTextColor = Color(AuthUtils.PRIMARY_BLUE),
+                unfocusedTextColor = Color(AuthUtils.PRIMARY_BLUE)
+
+            )
+        )
         Spacer(modifier = Modifier.height(8.dp))
 
         HeadingNames("Email")
