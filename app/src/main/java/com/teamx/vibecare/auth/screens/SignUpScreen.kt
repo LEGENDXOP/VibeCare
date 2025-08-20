@@ -21,7 +21,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
+//import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
@@ -43,9 +43,12 @@ import com.teamx.vibecare.auth.utils.AuthUtils
 import com.teamx.vibecare.auth.utils.AuthViewModel
 import android.app.DatePickerDialog
 import android.graphics.Paint
+import android.widget.ImageButton
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
@@ -54,6 +57,7 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.*
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
@@ -240,6 +244,27 @@ fun SignUpScreen(modifier: Modifier, viewModel: AuthViewModel) {
                 color = Color.White
             )
         }
+
+            Column(modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    text = "or sign up with",
+                    fontSize = 12.sp,
+                    fontFamily = FontFamily(Font(R.font.league_spartan_medium)),
+                    color = Color(AuthUtils.LIGHT_BLACK),
+                    textAlign = TextAlign.Center,
+                )
+                IconButton(onClick = { }) {
+                    Icon(
+                        //modifier = Modifier.align(Alignment.CenterHorizontally),
+                        painter = painterResource(id = R.drawable.google),
+                        contentDescription = "Google Icon",
+                        modifier = Modifier.size(50.dp),
+                        tint = Color.Unspecified,
+                    )
+                }
+            }
     }
 
 }
