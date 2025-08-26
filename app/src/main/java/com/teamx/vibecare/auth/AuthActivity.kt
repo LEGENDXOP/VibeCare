@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.teamx.vibecare.auth.screens.Homepage
 import com.teamx.vibecare.auth.screens.LoginScreen
 import com.teamx.vibecare.auth.screens.SignUpScreen
 import com.teamx.vibecare.auth.ui.theme.VibeCareTheme
@@ -22,7 +23,7 @@ class AuthActivity : ComponentActivity() {
             VibeCareTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     val authViewModel = viewModel { AuthViewModel() }
-                    SignUpScreen(modifier = Modifier.padding(innerPadding), authViewModel)
+                    Homepage(modifier = Modifier.padding(innerPadding))
                 }
             }
         }

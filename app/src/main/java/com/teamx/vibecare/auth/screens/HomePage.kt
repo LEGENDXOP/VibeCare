@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -37,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.teamx.vibecare.R
 
 
 @Preview
@@ -56,12 +58,20 @@ fun Homepage(modifier: Modifier = Modifier) {
 
         }
 
+    Row {
         TextField(
             value = "",
             onValueChange = {},
             label = { Text("Search") },
-            modifier = Modifier.fillMaxWidth()
+
         )
+
+        IconButton(onClick = {}) {
+            Icon(painter = painterResource(id = R.drawable.filter_icon), contentDescription = null)
+
+
+        }
+    }
 
         LazyRow(){
             items(10) { index ->
@@ -77,8 +87,8 @@ fun Homepage(modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
 
-            item {
-                list(item = sqlist(R.drawable.ic_launcher_background, "Depressed"), navController = NavHostController())
+            items(lists) {
+                list(item = it )
             }
 
         }
@@ -97,7 +107,6 @@ fun button(name: String, isClicked: String) {
         modifier = Modifier
             .height(30.dp)
             .width(120.dp)
-            .weight(0.3f)
             .background(
                 color = if (isClicked == "small") Color(0xFF220C02) else Color.Transparent,  // Fill background color
                 shape = RoundedCornerShape(20.dp)
@@ -121,7 +130,7 @@ fun button(name: String, isClicked: String) {
 }
 
 @Composable
-fun list(item:sqlist, navController: NavHostController) {
+fun list(item:sqlist) {
 
     Row(
         modifier = Modifier.fillMaxWidth().clickable {  },
@@ -174,7 +183,7 @@ fun list(item:sqlist, navController: NavHostController) {
             Row(
 
                 modifier = Modifier
-                    .fillMaxWidth().clickable { navController.navigate(screen.coffeedetail.route) }
+                    .fillMaxWidth().clickable {  }
                     .padding(start = 10.dp, end = 10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
