@@ -124,7 +124,13 @@ fun SignUpScreen(modifier: Modifier, viewModel: AuthViewModel) {
         } )
         Spacer(modifier = Modifier.height(8.dp))
 
-      HeadingNames("Password")
+
+
+        HeadingNames("Email")
+        textField(email, { viewModel.changeEmail(it) })
+        Spacer(modifier = Modifier.height(8.dp))
+
+        HeadingNames("Password")
         TextField(
             value = password,
             onValueChange = { viewModel.changePassword(it) },
@@ -160,10 +166,6 @@ fun SignUpScreen(modifier: Modifier, viewModel: AuthViewModel) {
 
             )
         )
-        Spacer(modifier = Modifier.height(8.dp))
-
-        HeadingNames("Email")
-        textField(email, { viewModel.changeEmail(it) })
         Spacer(modifier = Modifier.height(8.dp))
 
         HeadingNames("Date of Birth")
