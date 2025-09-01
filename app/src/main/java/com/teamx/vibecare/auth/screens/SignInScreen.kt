@@ -31,7 +31,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -43,7 +42,7 @@ import com.teamx.vibecare.auth.utils.AuthUtils
 import com.teamx.vibecare.auth.utils.AuthViewModel
 
 @Composable
-fun LoginScreen(modifier: Modifier, viewModel: AuthViewModel) {
+fun SignInScreen(modifier: Modifier, viewModel: AuthViewModel) {
     val email by viewModel.email.collectAsStateWithLifecycle()
     val password by viewModel.password.collectAsStateWithLifecycle()
     val passwordVisibility by viewModel.passwordVisibility.collectAsStateWithLifecycle()

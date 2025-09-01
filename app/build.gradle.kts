@@ -40,7 +40,11 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.ktor.client.serialization)
+    implementation(libs.ktor.client.negotiation)
+    implementation(libs.ktor.client.okhttp)
+    implementation(libs.ktor.client.core)
     implementation(libs.material3.extended.icons)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
